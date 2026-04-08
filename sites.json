@@ -1,0 +1,14 @@
+[
+  {
+    "id": "wiki-main",
+    "name": "Main Hub Wiki",
+    "owner": "tsubakihikaru",
+    "url": "./wiki-main/"
+  },
+  {
+    "id": "cool-project",
+    "name": "My Epic Project",
+    "owner": "friend1",
+    "url": "./cool-project/"
+  }
+]
