@@ -1,65 +1,56 @@
-// --- Tab Logic ---
-function showTab(tabId) {
-    // Hide all sections and deactivate all buttons
-    document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    
-    // Show current section
-    const section = document.getElementById(tabId);
-    if (section) section.classList.add('active');
+     // --- Tab Logic ---
+        function showTab(tabId) {
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (event) event.currentTarget.classList.add('active');
+        }
 
-    // Activate the clicked button
-    if (window.event && window.event.currentTarget) {
-        window.event.currentTarget.classList.add('active');
-    }
-}
+        function createSite() {
+            const name = prompt("Enter a name for your new wiki:");
+            if (name) {
+                alert("Triggering GitHub Action to create: " + name);
+            }
+        }
 
-// --- Site Loading Logic ---
-async function loadSites() {
-    try {
-        const response = await fetch('./sites.json');
-        const sites = await response.json();
-        const container = document.getElementById('sites-list');
-        
-        if (!container) return;
-        container.innerHTML = ''; 
+        // --- Site Loading & Renaming Logic ---
+        async function renameSiteOnGitHub(oldName, newName) {
+            console.log(`Renaming ${oldName} to ${newName} via API...`);
+        }
 
-        sites.forEach(site => {
-            // Use a placeholder if site.image is missing in sites.json
-            const imgUrl = site.image || 'https://placeholder.com';
+        function renamePrompt(siteId) {
+            const newName = prompt("Enter the new name for this site:");
+            if (newName) {
+                renameSiteOnGitHub(siteId, newName);
+            }
+        }
 
-            container.innerHTML += `
-                <div class="site-card">
-                    <div class="site-info">
-                        <strong>${site.name}</strong><br>
-                        <a href="${site.url}">tsubakihikaru.github.io/Quickstep/${site.id}</a><br><br>
-                        <button onclick="renamePrompt('${site.id}')" style="font-size:12px;">Rename</button>
-                    </div>
-                    <img src="${imgUrl}" class="site-preview" alt="Preview of ${site.name}">
-                </div>
-            `;
-        });
-    } catch (error) {
-        console.error("Error loading sites.json:", error);
-    }
-}
+        async function loadSites() {
+            try {
+                const response = await fetch('./sites.json');
+                const sites = await response.json();
+                const container = document.getElementById('sites-list');
+                
+                if (!container) return;
 
-// --- Interaction Logic ---
-function renamePrompt(siteId) {
-    const newName = prompt("Enter the new name for this site:");
-    if (newName) {
-        console.log(`Renaming ${siteId} to ${newName} via API...`);
-        // Future: Trigger GitHub Action here
-    }
-}
+                container.innerHTML = ''; 
 
-function createSite() {
-    const name = prompt("Enter a name for your new wiki:");
-    if (name) {
-        alert("Triggering GitHub Action to create: " + name);
-        // Future: API call to trigger your YAML workflow
-    }
-}
+                sites.forEach(site => {
+                    container.innerHTML += `
+                        <div class="site-card">
+                            <strong>${site.name}</strong><br>
+                            <a href="${site.url}">tsubakihikaru.github.io/Quickstep/${site.id}</a>
+                            <button onclick="renamePrompt('${site.id}')" style="margin-left:10px; font-size:12px;">Rename</button>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Error loading sites.json:", error);
+            }
+        }
 
-// Ignition - Runs when the page is ready
-window.onload = loadSites;
+        // Ignition
+        window.onload = loadSites;
+
+
