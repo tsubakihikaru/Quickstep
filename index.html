@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quickstep Dashboard</title>
+    <style>
+        /* Basic styling to make it look like a modern dashboard */
+        body { font-family: sans-serif; margin: 0; display: flex; height: 100vh; background: #f4f4f9; }
+        
+        /* Sidebar Tabs */
+        nav { width: 250px; background: #2c3e50; color: white; display: flex; flex-direction: column; padding: 20px; }
+        nav h1 { font-size: 1.5rem; margin-bottom: 30px; color: #3498db; }
+        .tab-btn { background: none; border: none; color: white; text-align: left; padding: 15px; cursor: pointer; font-size: 1rem; border-radius: 5px; transition: 0.3s; }
+        .tab-btn:hover { background: #34495e; }
+        .tab-btn.active { background: #3498db; }
+
+        /* Content Area */
+        main { flex: 1; padding: 40px; overflow-y: auto; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        
+        .site-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 10px; }
+        .btn-create { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>Quickstep</h1>
+        <button class="tab-btn active" onclick="showTab('sites')">Sites</button>
+        <button class="tab-btn" onclick="showTab('dm')">Direct Messages</button>
+        <button class="tab-btn" onclick="showTab('friends')">Friend Requests</button>
+        <button class="tab-btn" onclick="showTab('social')">Social Media</button>
+    </nav>
+
+    <main>
+        <!-- SITES TAB -->
+        <section id="sites" class="content-section active">
+            <h2>Your Sites</h2>
+            <button class="btn-create" onclick="createSite()">+ Create New Wiki</button>
+            <div class="site-card">
+                <strong>Main Wiki</strong><br>
+                <a href="./wiki-main">tsubakihikaru.github.io/quickstep/wiki-main</a>
+            </div>
+        </section>
+
+        <!-- DM TAB -->
+        <section id="dm" class="content-section">
+            <h2>Direct Messages</h2>
+            <p>Messages will appear here.</p>
+        </section>
+
+        <!-- FRIENDS TAB -->
+        <section id="friends" class="content-section">
+            <h2>Friend Requests</h2>
+            <p>No new requests.</p>
+        </section>
+
+        <!-- SOCIAL TAB -->
+        <section id="social" class="content-section">
+            <h2>Social Media</h2>
+            <p>Activity feed coming soon...</p>
+        </section>
+    </main>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Show current section and activate button
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function createSite() {
+            const name = prompt("Enter a name for your new wiki:");
+            if (name) {
+                alert("Triggering GitHub Action to create: " + name);
+                // Later, we will put the GitHub API code here!
+            }
+        }
+    </script>
+</body>
+</html>
