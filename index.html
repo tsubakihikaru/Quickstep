@@ -86,32 +86,51 @@
     </script>
 </body>
 </html>
+<script>
 async function renameSiteOnGitHub(oldName, newName) {
-    // You would use the GitHub API here to update your 'sites.json'
-    // This requires a Token and the 'sha' of the current file
     console.log(`Renaming ${oldName} to ${newName} via API...`);
-    
-    // Example API endpoint:
-    // https://github.com
+    // API logic will go here later
 }
+
+// This helper function handles the popup when you click 'Rename'
+function renamePrompt(siteId) {
+    const newName = prompt("Enter the new name for this site:");
+    if (newName) {
+        renameSiteOnGitHub(siteId, newName);
+    }
+}
+
 async function loadSites() {
-    const response = await fetch('./sites.json');
-    const sites = await response.json();
-    const container = document.getElementById('sites-list'); // Add this ID to your HTML div
-    
-    container.innerHTML = ''; // Clear the list
+    try {
+        const response = await fetch('./sites.json');
+        const sites = await response.json();
+        const container = document.getElementById('sites-list');
+        
+        if (!container) {
+            console.error("Could not find element with id 'sites-list'");
+            return;
+        }
 
-    sites.forEach(site => {
-        container.innerHTML += `
-            <div class="site-card">
-                <strong>${site.name}</strong><br>
-                <a href="${site.url}">tsubakihikaru.github.io/Quickstep/${site.id}</a>
-                <button onclick="renamePrompt('${site.id}')" style="margin-left:10px; font-size:12px;">Rename</button>
-            </div>
-        `;
-    });
+        container.innerHTML = ''; 
+
+        sites.forEach(site => {
+            // Using backticks (`) here is essential for the ${} to work!
+            container.innerHTML += `
+                <div class="site-card">
+                    <strong>${site.name}</strong><br>
+                    <a href="${site.url}">tsubakihikaru.github.io/Quickstep/${site.id}</a>
+                    <button onclick="renamePrompt('${site.id}')" style="margin-left:10px; font-size:12px;">Rename</button>
+                </div>
+            `;
+        });
+    } catch (error) {
+        console.error("Error loading sites.json:", error);
+    }
 }
 
-// Run this when the page loads
+// This makes the function run as soon as the page finishes loading
+window.onload = loadSites;
+</script>
+
 window.onload = loadSites;
 
