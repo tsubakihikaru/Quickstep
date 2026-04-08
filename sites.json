@@ -11,4 +11,9 @@
     "owner": "friend1",
     "url": "./cool-project/"
   }
+  {
+  "id" = "idp-wiki",
+  "name": "IDP Wiki",
+  "owner": "Haku Yuzuki",
+  "url": "./idp-wiki/"
 ]
